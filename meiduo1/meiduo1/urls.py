@@ -44,5 +44,6 @@ urlpatterns = [
     url(r'', include('apps.carts.urls',namespace='carts')),
     url(r'', include('apps.orders.urls',namespace='orders')),
     url(r'', include('apps.payment.urls',namespace='payment')),
+    url(r'', include('apps.meiduo_admin.urls',namespace='meiduo_admin')),
     # url(r'', include('apps.goods.urls',namespace='goods')),
 ]

@@ -139,7 +139,7 @@ class LoginView(View):
         from django.contrib.auth.backends import ModelBackend
         # mobile = re.match(r'^1[3-9]\d{9}$',username).group()
         # username = User.objects.get(mobile=mobile).username
-        user = authenticate(username=username, password=password)
+        user = authenticate(request,username=username, password=password)
         if user is None:
             return HttpResponseBadRequest("用户名或者密码不匹配")
 
