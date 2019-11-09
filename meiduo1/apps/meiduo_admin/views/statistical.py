@@ -1,13 +1,13 @@
 from datetime import date, timedelta
 
-from rest_framework.generics import ListAPIView,CreateAPIView, ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.goods.models import GoodsVisitCount, GoodsCategory
-from apps.meiduo_admin.views.model_serializer import UserSerializer,UserAddSerializer
+from apps.meiduo_admin.serializer.model_serializer import UserSerializer
 from apps.user.models import User
-from rest_framework.pagination import PageNumberPagination
 
 
 class UserTotalCountView(APIView):
@@ -100,33 +100,34 @@ class UserPagination(PageNumberPagination):
 
 
 class UserListView(ListCreateAPIView):
-    # serializer_class = UserSerializer
+    serializer_class = UserSerializer
 
+    queryset = User.objects.all()
     pagination_class = UserPagination
 
 
-    def get_serializer_class(self):
-        """
-        此方法是对serializer_class的赋值,不指定时使用默认None
-        :return: serializer_class
-        """
 
-        if self.request.method == 'GET':
-            return UserSerializer
-        else:
-            return UserAddSerializer
+
+    # def get_serializer_class(self):
+    #     """
+    #     此方法是对serializer_class的赋值,不指定时使用默认None
+    #     :return: serializer_class
+    #     """
+    #
+    #     if self.request.method == 'GET':
+    #         return UserSerializer
+    #     else:
+    #         return UserAddSerializer
 
     # 获取查询用户
     def get_queryset(self):
         query_list = self.request.query_params
         kw = query_list.get('keyword')
         if kw == '' or kw is None:
-            user = User.objects.all()
+            user = User.objects.filter(is_staff=False)
         else:
-            try:
-                user = User.objects.filter(username=kw)
-            except:
-                user = None
+            user = User.objects.filter(username__contains=kw,is_staff=False)
+
         return user
 
 
