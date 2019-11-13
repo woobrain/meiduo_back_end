@@ -16,4 +16,4 @@ class OptionsView(ModelViewSet):
     def simple(self,request):
         data = SPUSpecification.objects.all()
         ser = SPUSpecificationSerializer(data,many=True)
-        return  Response(ser.data)
+        return Response(ser.data)

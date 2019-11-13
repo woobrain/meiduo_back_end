@@ -13,7 +13,7 @@ app = Celery(main='celery_tasks')
 app.config_from_object('celery_tasks.config', namespace='CELERY')
 
 # Load task modules from all registered Django app configs.
-app.autodiscover_tasks(['celery_tasks.sms','celery_tasks.email'])
+app.autodiscover_tasks(['celery_tasks.sms','celery_tasks.email','celery_tasks.detail_html'])
 
 
 # @app.task(bind=True)
