@@ -263,6 +263,7 @@ class FindMobile(View):
     #     mobile = request.POST.get('mobile')
     #     return render(request,'modify_password.html')
 
+
 class ModifyPwd(View):
     def get(self,request):
         return render(request,'modify_password.html')
